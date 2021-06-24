@@ -31,3 +31,25 @@ exports.createShortLink = async (req, res) => {
         })
     }
 }
+
+exports.getLinkId = async (req, res) => {
+    try {
+        const { shortId } = req.params
+        const existingLink = await LinkModel.findOne({redirectedId: shortId})
+        if(!existingLink) {
+            return res.status(400).json({
+                message: "ссылка не найдена"
+
+            })
+        }
+        return res.redirect(existingLink.to)
+        // console.log(ownerId)
+
+
+    } catch(e) {
+        console.log('Ошибка при запросе id короткой ссылки')
+        res.status(500).json({     //пока это - ошибка бэка, но должно быть в сервисе
+            message: message
+        })
+    }
+}

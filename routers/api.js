@@ -9,11 +9,12 @@ const router = require('express').Router()
 
 
 const { registerUser, loginUser } = require('../controllers/user')
-const { createShortLink } = require('../controllers/link')
+const { createShortLink, getLinkId } = require('../controllers/link')
 
 router.post('/register', registerUser)
 router.post('/login', loginUser)
 router.post('/create-short-link', createShortLink)
 // router.post('/to-short-link')
 router.get('/get-user-links')
+router.get('/shortlink/:shortId', getLinkId)
 exports.router = router
