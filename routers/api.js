@@ -4,13 +4,16 @@ const router = require('express').Router()
 
 // Links DB -> Link (model)
 
-router.post('/to-short-link')
 
-router.get('/get-user-links')
 
-const { registerUser, loginUser} = require('../controllers/user')
+
+
+const { registerUser, loginUser } = require('../controllers/user')
+const { createShortLink } = require('../controllers/link')
 
 router.post('/register', registerUser)
 router.post('/login', loginUser)
-
+router.post('/create-short-link', createShortLink)
+// router.post('/to-short-link')
+router.get('/get-user-links')
 exports.router = router
