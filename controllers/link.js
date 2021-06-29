@@ -48,10 +48,11 @@ exports.getLinkId = async (req, res) => {
 
             })
         }
-        return res.redirect(existingLink.to)
+        
        
         existingLink.clickcount = Number(existingLink.clickcount) + 1;
         await existingLink.save();
+        return res.redirect(existingLink.to)
         // console.log(allLinks)
     } catch(e) {
         console.log('Ошибка при запросе id короткой ссылки')
