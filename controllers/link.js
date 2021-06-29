@@ -49,7 +49,7 @@ exports.getLinkId = async (req, res) => {
         }
         return res.redirect(existingLink.to)
        
-        existingLink.clickCount = Number(existingLink.clickCount) + 1;
+        existingLink.clickcount = Number(existingLink.clickcount) + 1;
         await existingLink.save();
         // console.log(allLinks)
     } catch(e) {
