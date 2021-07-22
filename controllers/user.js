@@ -1,11 +1,11 @@
 const bcryptjs = require('bcryptjs')
 
 const { UserModel } = require('../models/user')
-const SALT_ROUND = 10
+const userService = require('../services/user')
 
 exports.registerUser = async (req, res) => {
     try {
-        const { email, password, username} = req.body
+        const { email, password} = req.body
 
         if(!email || !password) {
             return res.status(400).json({
@@ -17,26 +17,18 @@ exports.registerUser = async (req, res) => {
                 message:'Нужно указать пароль больше 8'
             })
         }
-        const userExists = await UserModel.findOne({email: email})   //человеческая ошибка, до регистрации
-        
-        if(userExists) {
-            return res.status(400).json({
-                message: 'Пользователь с такой почтой уже зарегистрирован'
-            })
-        }
-        
-        const hashedPassword = await bcryptjs.hash(password, SALT_ROUND) //второй параметр - число проходов шифрования
-        // console.log(hashedPassword)
-        // const compared = await bcryptjs.compare('123456789', hashedPassword) //расшифровка
-        // console.log(compared)
+        const results = await userService.registerUser(email, password)
+        /**
+         {
+             success: false,
+             message: "Не правильный логин ",
+             code: 400
+         } 
+         
+         */
+      res.status(results.code).json(results)
 
-         await UserModel.create({
-            email: email,
-            password: hashedPassword,
-            username: username
-        })
-
-        res.status(201).json('Регистрация прошла успешно')
+        
     } catch(e){
         res.status(500).json(e.message)
     }

@@ -1,9 +1,7 @@
-// const dotenv = require('dotenv')
-// dotenv.config()
 
 require('dotenv').config()
 const mongoUrl = process.env.mongo_url
-// console.log(mongoUrl)
+
 
 const express = require('express')
 const app = express()
