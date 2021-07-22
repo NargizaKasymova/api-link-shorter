@@ -1,15 +1,8 @@
 ## Логин пользователя
-## HTTP POST/login
+## HTTP POST https://link-shorter6.herokuapp.com/login 
 
 Body
 
-```javaScript
-{
-   "url": "https://link-shorter6.herokuapp.com",
-   "register-endpoint": "/register"
-}
-
-```
 
 ```javaScript
 
