@@ -2,11 +2,12 @@
 require('dotenv').config()
 const mongoUrl = process.env.mongo_url
 
-
+const cors = require('cors')
 const express = require('express')
 const app = express()
 const { router } = require('./routers/api')
 
+app.use(cors())
 app.use(express.json())
 app.use(router)
 
