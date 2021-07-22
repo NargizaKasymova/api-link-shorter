@@ -4,6 +4,14 @@
 Body
 
 ```javaScript
+{
+   "url": "https://link-shorter6.herokuapp.com",
+   "register-endpoint": "/register"
+}
+
+```
+
+```javaScript
 
 {
     "email": "",    //обязательное поле
