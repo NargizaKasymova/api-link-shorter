@@ -24,7 +24,7 @@ exports.registerUser = async function (email, password) {
         })
         return {
             success: true,
-            message: 'Вы авторизировались успешно',
+            message: 'Вы успешно зарегистрировались',
             code: 201
         }
     } catch (e) {
