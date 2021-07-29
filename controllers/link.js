@@ -1,3 +1,5 @@
+const linkService = require('../services/link')
+
 const mongoose = require('mongoose')
 const shortid = require('shortid')
 
@@ -16,10 +18,7 @@ exports.createShortLink = async (req, res) => {
             redirectedId: shortLinkId,      //тоже отправляет программа
             from: shortedLink,   //в 
             to: link
-       
         })
-
-
         res.status(200).json({
             link: shortedLink,      //изменили, было просто link
             message: 'Link is created'
@@ -61,45 +60,23 @@ exports.getLinkId = async (req, res) => {
         })
     }
 }
-exports.getAllLinks = async (req, res) => {
-    try {
-        
-        const allLinks = await LinkModel.find({})
 
-        if(!allLinks) {
-            return res.status(200).json([])
-        } res.status(200).json({
-            message: 'Все ссылки: ',
-            links: allLinks
-         })
-
-    } catch(e){
-        res.status(500).json({
-            message: "Ошибка при запросе всех ссылок"
-        })
-    }
-}
 
 exports.getAllLinksByOwnerId = async (req, res) => {
     try {
-        const allLinks = await LinkModel.find({})
-        
         console.log(req.params)
-
         const { userId } = req.params
         console.log(userId)
+
+        if (!userId) {
+            res.status(400).json({
+                message: 'Некорректные параметры'
+            })
+        }
+        const data = await this.getAllLinksByOwnerId(userId);
+
+        res.status(200).json(data);
         
-        const allLinksByOwnerId = await LinkModel.find({ownerId: userId})
-        console.log(allLinksByOwnerId)
-        
-        if(!allLinksByOwnerId) {
-                return res.status(200).json([])
-                } res.status(200).json({
-                    message: `Все ссылки пользователя ${userId}: `,
-                    ownerId: userId,
-                    links: allLinksByOwnerId
-                 })
-                
     } catch(e){
         res.status(400).json({
         message: "Нет такого пользователя"
@@ -112,10 +89,9 @@ exports.deleteLinkById = async (req, res) => {
     try {
         const { linkId } = req.params
         console.log(linkId)
-        const linkToDelete = await LinkModel.findByIdAndDelete({_id: linkId})
-        res.status(200).json({
-            message:`Ссылка с ID ${linkId} удалена успешно`
-        })
+        const data = await this.deleteLinkById(linkId)
+
+        res.status(200).json(data)
 
     } catch(e){
         res.status(500).json({

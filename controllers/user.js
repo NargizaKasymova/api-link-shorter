@@ -5,7 +5,7 @@ const userService = require('../services/user')
 function validate(email, password, res) {
     if (!email || !password) {
         return res.status(400).json({
-            message: 'Нужно указать необходимые поля для регистрации'
+            message: 'Нужно указать необходимые поля'
         })
     }
     if (password.length < 8) {
@@ -43,7 +43,8 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body
+        const { email, password } = req.body;
+        console.log(req.body)
         const validationResults = validate(email, password, res)
         
         if(validationResults.success) {
